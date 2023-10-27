@@ -1,4 +1,61 @@
-<p>inicio-sesion works!</p>
-<a href="recover-pass">recuperar</a> <br>
-<a href="register">registro  usuarios</a><br>
-<a href="dashboard">Iniciar Sesion</a>
+<div class="container-fluid ps-md-0">
+    <div class="row g-0">
+        <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+        <div class="col-md-8 col-lg-6">
+            <div class="login d-flex align-items-center py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9 col-lg-8 mx-auto">
+                            <h3 class="login-heading mb-4">Bienvenido!</h3>
+                            <form>
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="floatingInput"
+                                        placeholder="nombre@ejemplo.com">
+                                    <label for="floatingInput">Correo o Usuario</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="password" class="form-control" id="floatingPassword"
+                                        placeholder="Contraseña">
+                                    <label for="floatingPassword">Contraseña</label>
+                                </div>
+
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
+                                    <label class="form-check-label" for="rememberPasswordCheck">
+                                        Recuérdame
+                                    </label>
+                                </div>
+
+                                <div class="d-grid">
+                                    <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
+                                        type="button" (click)="inicioSesion()">Iniciar Sesión</button>
+                                    <div class="text-center">
+                                        <a class="small" href="#">Olvidaste tu contraseña?</a>
+                                    </div>
+                                </div>
+
+                                <p>o inicia sesión con:</p>
+                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                    <i class="bi bi-facebook"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                    <i class="bi bi-google"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                    <i class="bi bi-twitter"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                    <i class="bi bi-github"></i>
+                                </button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

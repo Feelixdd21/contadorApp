@@ -8,7 +8,7 @@ import { PaginaNoEncontradaComponent } from './shared/components/pagina-no-encon
 @NgModule({
   declarations: [
     AppComponent,
-    PaginaNoEncontradaComponent,
+    PaginaNoEncontradaComponent
   ],
   imports: [
     BrowserModule,

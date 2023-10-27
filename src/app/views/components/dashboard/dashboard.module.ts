@@ -6,6 +6,8 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { ChatComponent } from './chat/chat.component';
 import { CargaArchivosComponent } from './carga-archivos/carga-archivos.component';
 import { RegistroOperacionesComponent } from './registro-operaciones/registro-operaciones.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { MainComponent } from './main/main.component';
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import { RegistroOperacionesComponent } from './registro-operaciones/registro-op
     HomePageComponent,
     ChatComponent,
     CargaArchivosComponent,
-    RegistroOperacionesComponent
+    RegistroOperacionesComponent,
+    NavbarComponent,
+    MainComponent
   ],
   imports: [
     CommonModule,
