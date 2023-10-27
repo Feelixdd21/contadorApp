@@ -10,7 +10,7 @@
                             <form>
                                 <div class="form-floating mb-3">
                                     <input type="email" class="form-control" id="floatingInput"
-                                        placeholder="nombre@ejemplo.com">
+                                        placeholder="nombre@ejemplo.com" required="" autofocus="">
                                     <label for="floatingInput">Correo o Usuario</label>
                                 </div>
                                 <div class="form-floating mb-3">
@@ -20,21 +20,40 @@
                                 </div>
 
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
-                                    <label class="form-check-label" for="rememberPasswordCheck">
-                                        Recuérdame
-                                    </label>
+                                    <div class="row">
+                                        <div class="col-6"> <!-- Columna del checkbox -->
+                                            <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
+                                            <label class="form-check-label" for="rememberPasswordCheck">Recuérdame</label>
+                                        </div>
+                                        <div class="col-6"> <!-- Columna del enlace "Olvidaste tu contraseña?" -->
+                                            <a class="small" href="recover-pass">Olvidaste tu contraseña?</a>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
+                                
+                                <!-- 
+
+                                <div class="col">
+                                </div> -->
 
                                 <div class="d-grid">
                                     <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
                                         type="button" (click)="inicioSesion()">Iniciar Sesión</button>
-                                    <div class="text-center">
-                                        <a class="small" href="recover-pass">Olvidaste tu contraseña?</a>
+                                </div>
+
+                                <div class="d-grid">
+                                    <div class="">
+                                        <span>No tienes cuenta? <a class="small"
+                                                href="register">Registrate</a></span>
                                     </div>
                                 </div>
 
-                                <p>o inicia sesión con:</p>
+                                <div class="divider d-flex align-items-center my-4">
+                                    <p class="text-center fw-light mx-3 mb-0 fs-6">o inicia sesión con:</p>
+                                  </div>
+
+            
                                 <button type="button" class="btn btn-link btn-floating mx-1">
                                     <i class="bi bi-facebook"></i>
                                 </button>
