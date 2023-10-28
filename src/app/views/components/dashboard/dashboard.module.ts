@@ -8,6 +8,7 @@ import { CargaArchivosComponent } from './carga-archivos/carga-archivos.componen
 import { RegistroOperacionesComponent } from './registro-operaciones/registro-operaciones.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MainComponent } from './main/main.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { MainComponent } from './main/main.component';
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class DashboardModule { }

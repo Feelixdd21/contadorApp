@@ -1,1 +1,153 @@
-<p>registro-operaciones works!</p>
+<div class="card text-center mt-3" *ngIf="mostrarTabla">
+    <div class="card-header align-items-center">
+        <div class="row">
+
+            <div class="col-11">
+                Agregar Operación
+            </div>
+            <div class="col-1">
+                <button type="button" class="btn-close" aria-label="Close" (click)="mostrarTabla = false"></button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="formulario" (ngSubmit)="onSubmit()"
+            class="row gy-2 gx-3 align-items-center needs-validation mb-3 mt-3" novalidate>
+            <div class="col-md-4">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="beneficiarioInput" placeholder=""
+                        formControlName="beneficiario" required
+                        [ngClass]="{'is-invalid': formulario.get('beneficiario')!.invalid && formulario.get('beneficiario')!.touched}">
+                    <label for="beneficiarioInput">Beneficiario</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="descripcionInput" placeholder="" formControlName="descripcion"
+                        required
+                        [ngClass]="{'is-invalid': formulario.get('descripcion')!.invalid && formulario.get('descripcion')!.touched}">
+                    <label for="descripcionInput">Descripción</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="facturaInput" placeholder="" formControlName="factura"
+                        required
+                        [ngClass]="{'is-invalid': formulario.get('factura')!.invalid && formulario.get('factura')!.touched}">
+                    <label for="facturaInput">Ref de Factura</label>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="input-group ">
+                    <label class="input-group-text" for="fechaInput">Fecha</label>
+                    <input type="date" class="form-control" id="fechaInput" formControlName="fecha" required
+                        [ngClass]="{'is-invalid': formulario.get('fecha')!.invalid && formulario.get('fecha')!.touched}">
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="input-group ">
+                    <label class="input-group-text" for="selectInput">Tipo de operación</label>
+                    <select class="form-select" id="selectInput" formControlName="tipoOperacion" required
+                        [ngClass]="{'is-invalid': formulario.get('tipoOperacion')!.invalid && formulario.get('tipoOperacion')!.touched}">
+                        <option value="Ingreso">Ingreso</option>
+                        <option value="Egreso">Egreso</option>
+                        <option value="Traspaso">Traspaso</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="input-group ">
+                    <label class="input-group-text" for="montoInput">$</label>
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="montoInput" placeholder="" formControlName="monto"
+                            min="0" required
+                            [ngClass]="{'is-invalid': formulario.get('monto')!.invalid && formulario.get('monto')!.touched}">
+                        <label for="montoInput">Monto</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer text-body-secondary">
+                <button type="submit" class="btn btn-primary" [disabled]="!formulario.valid">Insertar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card text-center mt-3">
+    <div class="card-header">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <p class="display-6">Registro de Operaciones</p>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-primary" (click)="mostrarTabla = true">Agregar nuevo</button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body table-responsive-md ">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Beneficiario</th>
+                    <th>Descripción</th>
+                    <th>Factura</th>
+                    <th>Fecha</th>
+                    <th>Operación</th>
+                    <th>Monto</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let operacion of operaciones">
+                    <td>{{operacion.beneficiario}}</td>
+                    <td>{{operacion.descripcion}}</td>
+                    <td>{{operacion.factura}}</td>
+                    <td>{{operacion.fecha}}</td>
+                    <td>{{operacion.tipoOperacion}}</td>
+                    <td>{{operacion.monto}}</td>
+                    <td>
+                        <button type="button" class="btn btn-link btn-floating mx-1">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button type="button" class="btn btn-link btn-floating mx-1">
+                            <i class="bi bi-trash3-fill"></i>
+                        </button>
+                    </td>
+                </tr>
+               
+                <tr>
+                    
+                    <td colspan="12" class="p-0" *ngIf="operaciones.length!=0">
+                        <div class="divider d-flex align-items-center my-4">
+                            <p class="text-center fw-light mx-3 mb-0 fs-6">Total</p>
+                        </div>
+                        <table class="table  table-bordered table-hover m-0">
+                            <thead class="table-secondary">
+                                <tr>
+                                    <th>Ingresos</th>
+                                    <th>Egresos</th>
+                                    <th>Traspasos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ingresos}}</td>
+                                    <td>{{egresos}}</td>
+                                    <td>{{traspasos}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer">
+        <div class="col-md-2">
+            <button class="btn btn-outline-secondary" (click)="exportToExcel()">Exportar a Excel</button>
+        </div>
+    </div>
+</div>
