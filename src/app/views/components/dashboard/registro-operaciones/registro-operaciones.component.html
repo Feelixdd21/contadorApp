@@ -70,7 +70,10 @@
             </div>
 
             <div class="card-footer text-body-secondary">
-                <button type="submit" class="btn btn-primary" [disabled]="!formulario.valid">Insertar</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!formulario.valid" *ngIf="!mostrarBotonGuardar">Insertar</button>
+                <button type="button"class="btn btn-primary"[disabled]="!formulario.valid" (click)="update()" *ngIf="mostrarBotonGuardar">Guardar
+                            
+                </button>
             </div>
         </form>
     </div>
@@ -101,7 +104,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let operacion of operaciones">
+                <tr *ngFor="let operacion of operaciones let i = index" >
                     <td>{{operacion.fecha}}</td>
                     <td>{{operacion.tipoOperacion}}</td>
                     <td>{{operacion.beneficiario}}</td>
@@ -109,12 +112,17 @@
                     <td>{{operacion.descripcion}}</td>
                     <td>{{operacion.factura}}</td>
                     <td>
-                        <button type="button" class="btn btn-link btn-floating mx-1">
+
+
+                        <button type="boton" class="btn btn-link btn-floating mx-1"id="edit-name" (click)="editOeditperacion(i)">
                             <i class="bi bi-pencil"></i>
                         </button>
-                        <button type="button" class="btn btn-link btn-floating mx-1">
+                  
+                        <button type="button" class="btn btn-link btn-floating mx-1" (click)="deletedata(i)">
                             <i class="bi bi-trash3-fill"></i>
                         </button>
+
+                        
                     </td>
                 </tr>
                

@@ -21,10 +21,11 @@ export class RegistroOperacionesComponent implements OnInit {
     monto: 0
   }
   mostrarTabla: boolean = false;
+  mostrarBotonGuardar: boolean= false;
   ingresos: number = 0;
   egresos: number = 0;
   traspasos: number = 0;
-
+  editingIndex?: number = 0;
 
 
   constructor(private fb: FormBuilder) {
@@ -83,5 +84,52 @@ export class RegistroOperacionesComponent implements OnInit {
     // Limpia el objeto URL
     window.URL.revokeObjectURL(url);
   }
+  deletedata(index: number) {
+    const operacion = this.operaciones[index];
+    const monto = operacion.monto;
 
+    if (operacion.tipoOperacion === 'Egreso') {
+      this.egresos -= monto;
+    } else if (operacion.tipoOperacion === 'Traspaso') {
+      this.traspasos -= monto;
+    } else {
+      this.ingresos -= monto;
+    }
+    this.operaciones.splice(index, 1);
+  }
+ 
+  editOeditperacion(index: number) {
+    const operacion = this.operaciones[index];
+    this.mostrarTabla = true;
+    this.mostrarBotonGuardar = true;
+
+    // Cargar los datos de la operación en el formulario
+    this.formulario.patchValue({
+      fecha: operacion.fecha,
+      tipoOperacion: operacion.tipoOperacion,
+      beneficiario: operacion.beneficiario,
+      monto: operacion.monto,
+      descripcion: operacion.descripcion,
+      factura: operacion.factura,
+      
+    });
+  
+    // También puedes guardar el índice del elemento que se está editando para actualizarlo más tarde
+    this.editingIndex = index;
+  }
+  
+  update() {
+    if (this.formulario.valid) {
+      const updatedOperacion = this.formulario.value;
+      const index = this.editingIndex;
+      this.mostrarBotonGuardar = true;
+      this.mostrarTabla= false
+      
+      if (index !== undefined && index >= 0) {
+        this.operaciones[index] = updatedOperacion;
+        this.formulario.reset();
+        this.editingIndex = undefined;
+      }
+}
+  }
 }
