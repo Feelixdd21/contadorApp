@@ -102,7 +102,7 @@ export class RegistroOperacionesComponent implements OnInit {
     const operacion = this.operaciones[index];
     this.mostrarTabla = true;
     this.mostrarBotonGuardar = true;
-
+  
     // Cargar los datos de la operación en el formulario
     this.formulario.patchValue({
       fecha: operacion.fecha,
@@ -111,7 +111,6 @@ export class RegistroOperacionesComponent implements OnInit {
       monto: operacion.monto,
       descripcion: operacion.descripcion,
       factura: operacion.factura,
-      
     });
   
     // También puedes guardar el índice del elemento que se está editando para actualizarlo más tarde
@@ -122,14 +121,37 @@ export class RegistroOperacionesComponent implements OnInit {
     if (this.formulario.valid) {
       const updatedOperacion = this.formulario.value;
       const index = this.editingIndex;
-      this.mostrarBotonGuardar = true;
-      this.mostrarTabla= false
-      
+      this.mostrarBotonGuardar = false;
+      this.mostrarTabla = false;
+  
       if (index !== undefined && index >= 0) {
+        // Restar el monto anterior antes de actualizar la operación
+        const operacionAnterior = this.operaciones[index];
+        const montoAnterior = operacionAnterior.monto;
+  
+        if (operacionAnterior.tipoOperacion === 'Ingreso') {
+          this.ingresos -= montoAnterior;
+        } else if (operacionAnterior.tipoOperacion === 'Egreso') {
+          this.egresos -= montoAnterior;
+        } else if (operacionAnterior.tipoOperacion === 'Traspaso') {
+          this.traspasos -= montoAnterior;
+        }
+  
+        // Actualizar la operación en el arreglo 'operaciones'
         this.operaciones[index] = updatedOperacion;
+  
+        // Sumar el monto actual después de actualizar la operación
+        if (updatedOperacion.tipoOperacion === 'Ingreso') {
+          this.ingresos += updatedOperacion.monto;
+        } else if (updatedOperacion.tipoOperacion === 'Egreso') {
+          this.egresos += updatedOperacion.monto;
+        } else if (updatedOperacion.tipoOperacion === 'Traspaso') {
+          this.traspasos += updatedOperacion.monto;
+        }
+  
         this.formulario.reset();
         this.editingIndex = undefined;
       }
-}
+    }
   }
 }
