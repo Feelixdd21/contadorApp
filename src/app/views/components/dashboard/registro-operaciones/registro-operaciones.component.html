@@ -62,7 +62,7 @@
                     <label class="input-group-text" for="montoInput">$</label>
                     <div class="form-floating">
                         <input type="number" class="form-control" id="montoInput" placeholder="" formControlName="monto"
-                            min="0" required
+                            min="0" step="0.0001" required pattern="\d+(\.\d{1,4})?"
                             [ngClass]="{'is-invalid': formulario.get('monto')!.invalid && formulario.get('monto')!.touched}">
                         <label for="montoInput">Monto</label>
                     </div>

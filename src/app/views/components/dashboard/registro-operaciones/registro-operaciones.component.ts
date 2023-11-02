@@ -14,11 +14,11 @@ export class RegistroOperacionesComponent implements OnInit {
   operaciones: Array<Operacion> = []
   operacionModel: Operacion = {
     beneficiario: 'Felix',
-    descripcion: 'asd',
-    factura: 'asd',
-    fecha: '',
+    descripcion: 'Valdes',
+    factura: '1234XXX',
+    fecha: '2023-11-01',
     tipoOperacion: 'Ingreso',
-    monto: 0
+    monto: 1.0000
   }
   mostrarTabla: boolean = false;
   mostrarBotonGuardar: boolean= false;
