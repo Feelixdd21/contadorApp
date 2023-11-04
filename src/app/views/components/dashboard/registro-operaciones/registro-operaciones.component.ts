@@ -21,11 +21,25 @@ export class RegistroOperacionesComponent implements OnInit {
     monto: 1.0000
   }
   mostrarTabla: boolean = false;
-  mostrarBotonGuardar: boolean= false;
+  mostrarBotonGuardar: boolean = false;
   ingresos: number = 0;
   egresos: number = 0;
   traspasos: number = 0;
   editingIndex?: number = 0;
+
+
+
+
+
+  //dataToSave = { operaciones: 'operacion' };
+
+
+
+
+
+
+
+
 
 
   constructor(private fb: FormBuilder) {
@@ -34,6 +48,27 @@ export class RegistroOperacionesComponent implements OnInit {
 
 
   ngOnInit(): void {
+    if (localStorage.getItem('myData') != null) {
+      this.operaciones = JSON.parse(localStorage.getItem('myData')!);
+
+    }
+    if (localStorage.getItem('ingresos') != null) {
+      this.ingresos = JSON.parse(localStorage.getItem('ingresos')!);
+
+    }
+    if (localStorage.getItem('egresos') != null) {
+      this.egresos = JSON.parse(localStorage.getItem('egresos')!);
+
+    }
+    if (localStorage.getItem('traspasos') != null) {
+      this.traspasos = JSON.parse(localStorage.getItem('traspasos')!);
+
+    }
+    //this.ingresos=20
+    //localStorage.setItem('ingresos',this.ingresos.toString());
+
+    //console.log("mi ingreso es:", localStorage.getItem('ingresos'));
+
   }
 
   onSubmit() {
@@ -57,7 +92,14 @@ export class RegistroOperacionesComponent implements OnInit {
       }
       this.operaciones.push(this.formulario.value)
       this.mostrarTabla = false
+      localStorage.setItem('myData', JSON.stringify(this.operaciones));
+      localStorage.setItem('ingresos', JSON.stringify(this.ingresos));
+      localStorage.setItem('egresos', JSON.stringify(this.egresos));
+      localStorage.setItem('traspasos', JSON.stringify(this.traspasos));
+
+
     }
+
   }
 
   exportToExcel(): void {
@@ -96,13 +138,18 @@ export class RegistroOperacionesComponent implements OnInit {
       this.ingresos -= monto;
     }
     this.operaciones.splice(index, 1);
+    localStorage.setItem('myData', JSON.stringify(this.operaciones));
+    localStorage.setItem('ingresos', JSON.stringify(this.ingresos));
+    localStorage.setItem('egresos', JSON.stringify(this.egresos));
+    localStorage.setItem('traspasos', JSON.stringify(this.traspasos));
+
   }
- 
+
   editOeditperacion(index: number) {
     const operacion = this.operaciones[index];
     this.mostrarTabla = true;
     this.mostrarBotonGuardar = true;
-  
+
     // Cargar los datos de la operación en el formulario
     this.formulario.patchValue({
       fecha: operacion.fecha,
@@ -112,23 +159,26 @@ export class RegistroOperacionesComponent implements OnInit {
       descripcion: operacion.descripcion,
       factura: operacion.factura,
     });
-  
+    localStorage.setItem('myData', JSON.stringify(this.operaciones));
+    localStorage.setItem('ingresos', JSON.stringify(this.ingresos));
+    localStorage.setItem('egresos', JSON.stringify(this.egresos));
+    localStorage.setItem('traspasos', JSON.stringify(this.traspasos));
     // También puedes guardar el índice del elemento que se está editando para actualizarlo más tarde
     this.editingIndex = index;
   }
-  
+
   update() {
     if (this.formulario.valid) {
       const updatedOperacion = this.formulario.value;
       const index = this.editingIndex;
       this.mostrarBotonGuardar = false;
       this.mostrarTabla = false;
-  
+
       if (index !== undefined && index >= 0) {
         // Restar el monto anterior antes de actualizar la operación
         const operacionAnterior = this.operaciones[index];
         const montoAnterior = operacionAnterior.monto;
-  
+
         if (operacionAnterior.tipoOperacion === 'Ingreso') {
           this.ingresos -= montoAnterior;
         } else if (operacionAnterior.tipoOperacion === 'Egreso') {
@@ -136,10 +186,10 @@ export class RegistroOperacionesComponent implements OnInit {
         } else if (operacionAnterior.tipoOperacion === 'Traspaso') {
           this.traspasos -= montoAnterior;
         }
-  
+
         // Actualizar la operación en el arreglo 'operaciones'
         this.operaciones[index] = updatedOperacion;
-  
+
         // Sumar el monto actual después de actualizar la operación
         if (updatedOperacion.tipoOperacion === 'Ingreso') {
           this.ingresos += updatedOperacion.monto;
@@ -148,7 +198,10 @@ export class RegistroOperacionesComponent implements OnInit {
         } else if (updatedOperacion.tipoOperacion === 'Traspaso') {
           this.traspasos += updatedOperacion.monto;
         }
-  
+        localStorage.setItem('myData', JSON.stringify(this.operaciones));
+        localStorage.setItem('ingresos', JSON.stringify(this.ingresos));
+        localStorage.setItem('egresos', JSON.stringify(this.egresos));
+        localStorage.setItem('traspasos', JSON.stringify(this.traspasos));
         this.formulario.reset();
         this.editingIndex = undefined;
       }

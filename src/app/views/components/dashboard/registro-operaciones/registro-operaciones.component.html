@@ -23,8 +23,8 @@
             </div>
             <div class="col-md-4">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="descripcionInput" placeholder="" formControlName="descripcion"
-                        required
+                    <input type="text" class="form-control" id="descripcionInput" placeholder=""
+                        formControlName="descripcion" required
                         [ngClass]="{'is-invalid': formulario.get('descripcion')!.invalid && formulario.get('descripcion')!.touched}">
                     <label for="descripcionInput">Descripción</label>
                 </div>
@@ -70,9 +70,11 @@
             </div>
 
             <div class="card-footer text-body-secondary">
-                <button type="submit" class="btn btn-primary" [disabled]="!formulario.valid" *ngIf="!mostrarBotonGuardar">Insertar</button>
-                <button type="button"class="btn btn-primary"[disabled]="!formulario.valid" (click)="update()" *ngIf="mostrarBotonGuardar">Guardar
-                            
+                <button type="submit" class="btn btn-primary" [disabled]="!formulario.valid"
+                    *ngIf="!mostrarBotonGuardar">Insertar</button>
+                <button type="button" class="btn btn-primary" [disabled]="!formulario.valid" (click)="update()"
+                    *ngIf="mostrarBotonGuardar">Guardar
+
                 </button>
             </div>
         </form>
@@ -104,7 +106,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let operacion of operaciones let i = index" >
+                <tr *ngFor="let operacion of operaciones let i = index">
                     <td>{{operacion.fecha}}</td>
                     <td>{{operacion.tipoOperacion}}</td>
                     <td>{{operacion.beneficiario}}</td>
@@ -114,21 +116,22 @@
                     <td>
 
 
-                        <button type="boton" class="btn btn-link btn-floating mx-1"id="edit-name" (click)="editOeditperacion(i)">
+                        <button type="boton" class="btn btn-link btn-floating mx-1" id="edit-name"
+                            (click)="editOeditperacion(i)">
                             <i class="bi bi-pencil"></i>
                         </button>
-                  
+
                         <button type="button" class="btn btn-link btn-floating mx-1" (click)="deletedata(i)">
                             <i class="bi bi-trash3-fill"></i>
                         </button>
 
-                        
+
                     </td>
                 </tr>
-               
+
                 <tr>
-                    
-                    <td colspan="12" class="p-0" *ngIf="operaciones.length!=0">
+
+                    <td colspan="12" class="p-0">
                         <div class="divider d-flex align-items-center my-4">
                             <p class="text-center fw-light mx-3 mb-0 fs-6">Total</p>
                         </div>
