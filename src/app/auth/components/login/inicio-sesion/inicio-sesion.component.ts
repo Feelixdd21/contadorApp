@@ -17,14 +17,12 @@ export class InicioSesionComponent implements OnInit {
     });
 
   }
-  usuario: string = ""
-  pass: string = ""
 
   onSubmit() {
-    console.log(this.formulario.value);
     if (this.formulario.valid) {
-      this.router.navigate(['/dashboard']);
-
+      if (this.formulario.get('usuario')?.value == 'admin' && this.formulario.get('pass')?.value == 'admin') {
+        this.router.navigate(['/dashboard']);
+      }
     }
   }
 
