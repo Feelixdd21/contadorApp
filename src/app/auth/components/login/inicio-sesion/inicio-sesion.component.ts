@@ -20,7 +20,8 @@ export class InicioSesionComponent implements OnInit {
 
   onSubmit() {
     if (this.formulario.valid) {
-      if (this.formulario.get('usuario')?.value == 'admin' && this.formulario.get('pass')?.value == 'admin') {
+      if (this.formulario.get('usuario')?.value == 'anfitrion' && this.formulario.get('pass')?.value == 'anfitrion' || (this.formulario.get('usuario')?.value == 'user' && this.formulario.get('pass')?.value == 'user' )) {
+        localStorage.setItem('user', this.formulario.get('usuario')?.value)
         this.router.navigate(['/dashboard']);
       }
     }
