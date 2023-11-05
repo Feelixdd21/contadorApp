@@ -158,7 +158,8 @@
     </div>
     <div class="card-footer">
         <div class="col-md-2">
-            <button class="btn btn-outline-secondary" (click)="exportToExcel()">Exportar a Excel</button>
+            <button [hidden]="user!='anfitrion'" class="btn btn-outline-success" (click)="exportToExcel()">Exportar a
+                Excel</button>
         </div>
     </div>
 </div>

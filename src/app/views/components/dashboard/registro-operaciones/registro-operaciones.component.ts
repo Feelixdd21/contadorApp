@@ -10,6 +10,7 @@ import * as XLSX from 'xlsx';
 })
 export class RegistroOperacionesComponent implements OnInit {
 
+  user: string = localStorage.getItem('user')!;
   formulario: FormGroup;
   operaciones: Array<Operacion> = []
   operacionModel: Operacion = {
@@ -26,21 +27,6 @@ export class RegistroOperacionesComponent implements OnInit {
   egresos: number = 0;
   traspasos: number = 0;
   editingIndex?: number = 0;
-
-
-
-
-
-  //dataToSave = { operaciones: 'operacion' };
-
-
-
-
-
-
-
-
-
 
   constructor(private fb: FormBuilder) {
     this.formulario = this.fb.group(this.operacionModel);
@@ -64,16 +50,9 @@ export class RegistroOperacionesComponent implements OnInit {
       this.traspasos = JSON.parse(localStorage.getItem('traspasos')!);
 
     }
-    //this.ingresos=20
-    //localStorage.setItem('ingresos',this.ingresos.toString());
-
-    //console.log("mi ingreso es:", localStorage.getItem('ingresos'));
-
   }
 
   onSubmit() {
-
-
     if (this.formulario.valid) {
       switch (this.formulario.get('tipoOperacion')?.value) {
         case 'Ingreso':
@@ -96,8 +75,6 @@ export class RegistroOperacionesComponent implements OnInit {
       localStorage.setItem('ingresos', JSON.stringify(this.ingresos));
       localStorage.setItem('egresos', JSON.stringify(this.egresos));
       localStorage.setItem('traspasos', JSON.stringify(this.traspasos));
-
-
     }
 
   }
