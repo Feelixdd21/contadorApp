@@ -9,6 +9,9 @@ import { RegistroOperacionesComponent } from './registro-operaciones/registro-op
 import { NavbarComponent } from './navbar/navbar.component';
 import { MainComponent } from './main/main.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http'
+import { CargaService } from './carga-archivos/services/carga.service';
+import { NbButtonModule, NbCardModule, NbChatModule, NbLayoutModule, NbThemeModule, NbUserModule } from '@nebular/theme';
 
 
 @NgModule({
@@ -23,7 +26,14 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    NbCardModule,
+    NbLayoutModule,
+    NbUserModule,
+    NbChatModule,
+    NbThemeModule.forRoot({name:'coporate'}),
+    NbButtonModule
   ]
 })
 export class DashboardModule { }
