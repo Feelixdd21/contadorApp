@@ -1,4 +1,5 @@
 export interface Operacion {
+    idOperacion: number;
     beneficiario: string,
     descripcion: string,
     factura: string,

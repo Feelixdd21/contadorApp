@@ -8,10 +8,10 @@ import { CargaArchivosComponent } from './carga-archivos/carga-archivos.componen
 import { RegistroOperacionesComponent } from './registro-operaciones/registro-operaciones.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MainComponent } from './main/main.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
-import { CargaService } from './carga-archivos/services/carga.service';
 import { NbButtonModule, NbCardModule, NbChatModule, NbLayoutModule, NbThemeModule, NbUserModule } from '@nebular/theme';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -33,7 +33,8 @@ import { NbButtonModule, NbCardModule, NbChatModule, NbLayoutModule, NbThemeModu
     NbUserModule,
     NbChatModule,
     NbThemeModule.forRoot({name:'coporate'}),
-    NbButtonModule
-  ]
+    NbButtonModule,
+    FormsModule
+],providers:[DatePipe]
 })
 export class DashboardModule { }
