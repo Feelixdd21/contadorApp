@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Operacion } from 'src/app/views/models/operacion.model';
-import * as XLSX from 'xlsx';
+import { ExportService } from './service/export.service'
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-registro-operaciones',
@@ -10,10 +12,29 @@ import * as XLSX from 'xlsx';
 })
 export class RegistroOperacionesComponent implements OnInit {
 
+  meses = [
+    { nombre: 'Enero', numero: 1 },
+    { nombre: 'Febrero', numero: 2 },
+    { nombre: 'Marzo', numero: 3 },
+    { nombre: 'Abril', numero: 4 },
+    { nombre: 'Mayo', numero: 5 },
+    { nombre: 'Junio', numero: 6 },
+    { nombre: 'Julio', numero: 7 },
+    { nombre: 'Agosto', numero: 8 },
+    { nombre: 'Septiembre', numero: 9 },
+    { nombre: 'Octubre', numero: 10 },
+    { nombre: 'Noviembre', numero: 11 },
+    { nombre: 'Diciembre', numero: 12 }
+  ];
+
+  mesSeleccionado: string = '';
+  mesNumero: number = 0;
   user: string = localStorage.getItem('user')!;
   formulario: FormGroup;
   operaciones: Array<Operacion> = []
+  operacionesFiltrada: Array<Operacion> = []
   operacionModel: Operacion = {
+    idOperacion: 0,
     beneficiario: 'Felix',
     descripcion: 'Valdes',
     factura: '1234XXX',
@@ -28,10 +49,24 @@ export class RegistroOperacionesComponent implements OnInit {
   traspasos: number = 0;
   editingIndex?: number = 0;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private api: ExportService, private datePipe: DatePipe) {
     this.formulario = this.fb.group(this.operacionModel);
   }
 
+  fechaSeleccionada(mes: any) {
+    this.operacionesFiltrada = this.filterObjectsByMonth(this.operaciones, mes.numero);
+    this.mesSeleccionado = mes.nombre
+    this.mesNumero = mes.numero
+  }
+
+  filterObjectsByMonth(objects: Operacion[], targetMonth: number): Operacion[] {
+    return objects.filter(obj => {
+      const date = this.datePipe.transform(obj.fecha, 'MM-dd-yyyy');
+      const objDate = new Date(date!);
+      const objMonth = objDate.getMonth() + 1; // Suma 1 porque los meses se cuentan de 0 a 11
+      return objMonth === targetMonth;
+    });
+  }
 
   ngOnInit(): void {
     if (localStorage.getItem('myData') != null) {
@@ -75,34 +110,17 @@ export class RegistroOperacionesComponent implements OnInit {
       localStorage.setItem('ingresos', JSON.stringify(this.ingresos));
       localStorage.setItem('egresos', JSON.stringify(this.egresos));
       localStorage.setItem('traspasos', JSON.stringify(this.traspasos));
+      if(this.operacionesFiltrada.length!=0){
+        this.operacionesFiltrada = this.filterObjectsByMonth(this.operaciones, this.mesNumero);
+      }
     }
 
   }
 
   exportToExcel(): void {
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.operaciones);
-    const wb: XLSX.WorkBook = { Sheets: { 'data': ws }, SheetNames: ['data'] };
-    ws['A1'].s = { pattern: { fgColor: { rgb: "FFFF0000" } } };
-    XLSX.utils.book_append_sheet(wb, ws, 'Datos');
-
-    // Guarda el archivo Excel en un blob
-    const blob = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-
-
-    // Crea un objeto URL para el blob
-    const url = window.URL.createObjectURL(new Blob([blob]));
-
-    // Crea un elemento de enlace para descargar el archivo Excel
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'datos.xlsx';
-
-    // Simula un clic en el enlace para iniciar la descarga
-    a.click();
-
-    // Limpia el objeto URL
-    window.URL.revokeObjectURL(url);
+    this.api.exportToExcel(this.operaciones)
   }
+
   deletedata(index: number) {
     const operacion = this.operaciones[index];
     const monto = operacion.monto;
@@ -115,11 +133,14 @@ export class RegistroOperacionesComponent implements OnInit {
       this.ingresos -= monto;
     }
     this.operaciones.splice(index, 1);
+    
     localStorage.setItem('myData', JSON.stringify(this.operaciones));
     localStorage.setItem('ingresos', JSON.stringify(this.ingresos));
     localStorage.setItem('egresos', JSON.stringify(this.egresos));
     localStorage.setItem('traspasos', JSON.stringify(this.traspasos));
-
+    if(this.operacionesFiltrada.length!=0){
+      this.operacionesFiltrada = this.filterObjectsByMonth(this.operaciones, this.mesNumero);
+    }
   }
 
   editOeditperacion(index: number) {
