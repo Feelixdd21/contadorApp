@@ -7,8 +7,8 @@ import { PaginaNoEncontradaComponent } from './shared/components/pagina-no-encon
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
-import { NbEvaIconsModule } from '@nebular/eva-icons';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 @NgModule({
   declarations: [
