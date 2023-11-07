@@ -118,7 +118,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let operacion of operaciones let i = index">
+                    <tr *ngFor="let operacion of operaciones">
                         <td>{{operacion.fecha}}</td>
                         <td>{{operacion.tipoOperacion}}</td>
                         <td>{{operacion.beneficiario}}</td>
@@ -127,11 +127,11 @@
                         <td>{{operacion.factura}}</td>
                         <td>
                             <button type="boton" class="btn btn-link btn-floating mx-1" id="edit-name"
-                                (click)="editOeditperacion(i)">
+                                (click)="editOeditperacion(operacion.idOperacion)">
                                 <i class="bi bi-pencil"></i>
                             </button>
 
-                            <button type="button" class="btn btn-link btn-floating mx-1" (click)="deletedata(i)">
+                            <button type="button" class="btn btn-link btn-floating mx-1" (click)="deletedata(operacion.idOperacion)">
                                 <i class="bi bi-trash3-fill"></i>
                             </button>
                         </td>
