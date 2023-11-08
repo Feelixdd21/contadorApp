@@ -40,7 +40,7 @@ export class RegistroOperacionesComponent implements OnInit {
     factura: '1234XXX',
     fecha: '2023-11-01',
     tipoOperacion: 'Ingreso',
-    monto: 1.0000
+    monto: 1.00
   }
   mostrarTabla: boolean = false;
   mostrarBotonGuardar: boolean = false;
@@ -91,24 +91,29 @@ export class RegistroOperacionesComponent implements OnInit {
   nextId = 1;
 
   onSubmit() {
-    
     if (this.formulario.valid) {
+      let monto = this.formulario.get('monto')?.value;
+      monto = parseFloat(monto.toFixed(2));
+      console.log(monto);
+
       switch (this.formulario.get('tipoOperacion')?.value) {
         case 'Ingreso':
-          this.ingresos = this.ingresos + this.formulario.get('monto')?.value
+          this.ingresos = parseFloat(this.ingresos.toFixed(2)) + monto
           break;
 
         case 'Egreso':
-          this.egresos = this.egresos + this.formulario.get('monto')?.value
+          this.egresos = parseFloat(this.egresos.toFixed(2)) + monto
 
           break;
 
         case 'Traspaso':
-          this.traspasos = this.traspasos + this.formulario.get('monto')?.value
-
+          this.traspasos = parseFloat(this.traspasos.toFixed(2)) + monto
           break;
       }
-      
+
+      console.log(parseFloat(this.ingresos.toFixed(2)));
+
+
       const nuevaOperacion: Operacion = {
         idOperacion: this.nextId, // Asigna el ID
         beneficiario: this.formulario.get('beneficiario')?.value,
@@ -116,21 +121,21 @@ export class RegistroOperacionesComponent implements OnInit {
         factura: this.formulario.get('factura')?.value,
         fecha: this.formulario.get('fecha')?.value,
         tipoOperacion: this.formulario.get('tipoOperacion')?.value,
-        monto: this.formulario.get('monto')?.value
+        monto: monto
       };
-  
+
       // Incrementar el ID para la próxima operación
       this.nextId++;
-  
+
       // Agregar la nueva operación al arreglo de operaciones
       localStorage.setItem('lastId', this.nextId.toString());
       this.operaciones.push(nuevaOperacion);
       this.mostrarTabla = false
       localStorage.setItem('myData', JSON.stringify(this.operaciones));
-      localStorage.setItem('ingresos', JSON.stringify(this.ingresos));
-      localStorage.setItem('egresos', JSON.stringify(this.egresos));
-      localStorage.setItem('traspasos', JSON.stringify(this.traspasos));
-      if(this.operacionesFiltrada.length!=0){
+      localStorage.setItem('ingresos', JSON.stringify(parseFloat(this.ingresos.toFixed(2))));
+      localStorage.setItem('egresos', JSON.stringify(parseFloat(this.egresos.toFixed(2))));
+      localStorage.setItem('traspasos', JSON.stringify(parseFloat(this.traspasos.toFixed(2))));
+      if (this.operacionesFiltrada.length != 0) {
         this.operacionesFiltrada = this.filterObjectsByMonth(this.operaciones, this.mesNumero);
       }
     }
@@ -145,21 +150,21 @@ export class RegistroOperacionesComponent implements OnInit {
     const index = this.operaciones.findIndex(operacion => operacion.idOperacion === idOperacion);
     if (index !== -1) { // Verifica si se encontró un elemento con ese ID
       const operacionEliminada = this.operaciones.splice(index, 1)[0];
-  
+
       // Actualiza los totales (puedes hacer esto de manera similar a como lo haces en el método onSubmit)
       if (operacionEliminada.tipoOperacion === 'Ingreso') {
-        this.ingresos -= operacionEliminada.monto;
+        this.ingresos -= parseFloat(operacionEliminada.monto.toFixed(2));
       } else if (operacionEliminada.tipoOperacion === 'Egreso') {
-        this.egresos -= operacionEliminada.monto;
+        this.egresos -= parseFloat(operacionEliminada.monto.toFixed(2));
       } else if (operacionEliminada.tipoOperacion === 'Traspaso') {
-        this.traspasos -= operacionEliminada.monto;
+        this.traspasos -= parseFloat(operacionEliminada.monto.toFixed(2));
       }
-  
+
       // Guarda nuevamente los datos en localStorage
       localStorage.setItem('myData', JSON.stringify(this.operaciones));
-      localStorage.setItem('ingresos', JSON.stringify(this.ingresos));
-      localStorage.setItem('egresos', JSON.stringify(this.egresos));
-      localStorage.setItem('traspasos', JSON.stringify(this.traspasos));
+      localStorage.setItem('ingresos', JSON.stringify(parseFloat(this.ingresos.toFixed(2))));
+      localStorage.setItem('egresos', JSON.stringify(parseFloat(this.egresos.toFixed(2))));
+      localStorage.setItem('traspasos', JSON.stringify(parseFloat(this.traspasos.toFixed(2))));
     }
   }
 
@@ -168,21 +173,21 @@ export class RegistroOperacionesComponent implements OnInit {
     const operacion = this.operaciones[index];
     this.mostrarTabla = true;
     this.mostrarBotonGuardar = true;
-    
+
 
     // Cargar los datos de la operación en el formulario
     this.formulario.patchValue({
       fecha: operacion.fecha,
       tipoOperacion: operacion.tipoOperacion,
       beneficiario: operacion.beneficiario,
-      monto: operacion.monto,
+      monto: parseFloat(operacion.monto.toFixed(2)),
       descripcion: operacion.descripcion,
       factura: operacion.factura,
     });
     localStorage.setItem('myData', JSON.stringify(this.operaciones));
-    localStorage.setItem('ingresos', JSON.stringify(this.ingresos));
-    localStorage.setItem('egresos', JSON.stringify(this.egresos));
-    localStorage.setItem('traspasos', JSON.stringify(this.traspasos));
+    localStorage.setItem('ingresos', JSON.stringify(parseFloat(this.ingresos.toFixed(2))));
+    localStorage.setItem('egresos', JSON.stringify(parseFloat(this.egresos.toFixed(2))));
+    localStorage.setItem('traspasos', JSON.stringify(parseFloat(this.traspasos.toFixed(2))));
     // También puedes guardar el índice del elemento que se está editando para actualizarlo más tarde
     this.editingIndex = index;
   }
@@ -193,41 +198,41 @@ export class RegistroOperacionesComponent implements OnInit {
       const index = this.editingIndex;
       this.mostrarBotonGuardar = false;
       this.mostrarTabla = false;
-  
+
       if (index !== undefined && index >= 0) {
         // Restar el monto anterior antes de actualizar la operación
         const operacionAnterior = this.operaciones[index];
-        const montoAnterior = operacionAnterior.monto;
-  
+        const montoAnterior = parseFloat(operacionAnterior.monto.toFixed(2));
+
         if (operacionAnterior.tipoOperacion === 'Ingreso') {
-          this.ingresos -= montoAnterior;
+          this.ingresos -= parseFloat(montoAnterior.toFixed(2));
         } else if (operacionAnterior.tipoOperacion === 'Egreso') {
-          this.egresos -= montoAnterior;
+          this.egresos -= parseFloat(montoAnterior.toFixed(2));;
         } else if (operacionAnterior.tipoOperacion === 'Traspaso') {
-          this.traspasos -= montoAnterior;
+          this.traspasos -= parseFloat(montoAnterior.toFixed(2));;
         }
-  
+
         // Obtén el ID de la operación antes de actualizar
         const idOperacion = operacionAnterior.idOperacion;
-  
+
         // Actualizar la operación en el arreglo 'operaciones' sin cambiar el ID
         this.operaciones[index] = { ...updatedOperacion, idOperacion };
-  
+
         // Sumar el monto actual después de actualizar la operación
         if (updatedOperacion.tipoOperacion === 'Ingreso') {
-          this.ingresos += updatedOperacion.monto;
+          this.ingresos += parseFloat(updatedOperacion.monto.toFixed(2));
         } else if (updatedOperacion.tipoOperacion === 'Egreso') {
-          this.egresos += updatedOperacion.monto;
+          this.egresos += parseFloat(updatedOperacion.monto.toFixed(2));
         } else if (updatedOperacion.tipoOperacion === 'Traspaso') {
-          this.traspasos += updatedOperacion.monto;
+          this.traspasos += parseFloat(updatedOperacion.monto.toFixed(2));
         }
-  
+
         // Resto del código para guardar en localStorage
         localStorage.setItem('myData', JSON.stringify(this.operaciones));
-        localStorage.setItem('ingresos', JSON.stringify(this.ingresos));
-        localStorage.setItem('egresos', JSON.stringify(this.egresos));
-        localStorage.setItem('traspasos', JSON.stringify(this.traspasos));
-  
+        localStorage.setItem('ingresos', JSON.stringify(parseFloat(this.ingresos.toFixed(2))));
+        localStorage.setItem('egresos', JSON.stringify(parseFloat(this.egresos.toFixed(2))));
+        localStorage.setItem('traspasos', JSON.stringify(parseFloat(this.traspasos.toFixed(2))));
+
         this.formulario.reset();
         this.editingIndex = undefined;
       }
