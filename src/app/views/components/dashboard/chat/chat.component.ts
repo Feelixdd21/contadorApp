@@ -15,24 +15,86 @@ export class ChatComponent implements OnInit {
 
   messages: any[] = [
     {
-      text: "hola",
-      date: "2023-11-04",
+      text: "Buen día Sr. Alfonso",
+      date: new Date(),
       reply: true,
       type: "text",
       files: [],
       user: {
-        name: "Anfitrion",
+        name: "Contador",
         avatar: ''
       }
     },
     {
-      text: 'Hola que tal',
+      text: 'Buen día Contador',
       date: new Date(),
       reply: false,
       user: {
-        name: 'Usuario',
+        name: 'Contribuyente',
         avatar: 'https://img.freepik.com/psd-gratis/3d-ilustracion-persona-gafas-sol_23-2149436188.jpg',
       },
+    },
+    {
+      text: "Entrego su determinación de impuestos del mes correspondiente",
+      date: new Date(),
+      reply: true,
+      type: "text",
+      files: [],
+      user: {
+        name: "Contador",
+        avatar: ''
+      }
+    },
+    {
+      text: "Guardado en el apartado de carga de archivo",
+      date: new Date(),
+      reply: true,
+      type: "text",
+      files: [],
+      user: {
+        name: "Contador",
+        avatar: ''
+      }
+    },
+    {
+      text: 'Muchas gracias contador',
+      date: new Date(),
+      reply: false,
+      user: {
+        name: 'Contribuyente',
+        avatar: 'https://img.freepik.com/psd-gratis/3d-ilustracion-persona-gafas-sol_23-2149436188.jpg',
+      },
+    },
+    {
+      text: 'Que tenga un buen día',
+      date: new Date(),
+      reply: false,
+      user: {
+        name: 'Contribuyente',
+        avatar: 'https://img.freepik.com/psd-gratis/3d-ilustracion-persona-gafas-sol_23-2149436188.jpg',
+      },
+    },
+    {
+      text: "De nada",
+      date: new Date(),
+      reply: true,
+      type: "text",
+      files: [],
+      user: {
+        name: "Contador",
+        avatar: ''
+      }
+    },
+    {
+      text: "Quedo al pendiente de cualquier situación.",
+      date: new Date(),
+      reply: true,
+      type: "text",
+      files: [],
+      user: {
+        name: "Contador",
+        avatar: ''
+      }
     },
   ];
 
