@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 export class RegistroOperacionesComponent implements OnInit {
 
   meses = [
+    { nombre: 'Todos', numero: 0 },
     { nombre: 'Enero', numero: 1 },
     { nombre: 'Febrero', numero: 2 },
     { nombre: 'Marzo', numero: 3 },
@@ -54,9 +55,17 @@ export class RegistroOperacionesComponent implements OnInit {
   }
 
   fechaSeleccionada(mes: any) {
-    this.operacionesFiltrada = this.filterObjectsByMonth(this.operaciones, mes.numero);
-    this.mesSeleccionado = mes.nombre
-    this.mesNumero = mes.numero
+    if (mes.numero == 0) {
+      this.mesSeleccionado = 'Todos'
+      this.operacionesFiltrada = []
+    } else {
+      this.operacionesFiltrada = this.filterObjectsByMonth(this.operaciones, mes.numero);
+      this.mesSeleccionado = mes.nombre
+      this.mesNumero = mes.numero
+      if (this.filterObjectsByMonth(this.operaciones, mes.numero).length == 0) {
+        this.mesSeleccionado = 'No hay datos'
+      }
+    }
   }
 
   filterObjectsByMonth(objects: Operacion[], targetMonth: number): Operacion[] {
@@ -165,6 +174,9 @@ export class RegistroOperacionesComponent implements OnInit {
       localStorage.setItem('ingresos', JSON.stringify(parseFloat(this.ingresos.toFixed(2))));
       localStorage.setItem('egresos', JSON.stringify(parseFloat(this.egresos.toFixed(2))));
       localStorage.setItem('traspasos', JSON.stringify(parseFloat(this.traspasos.toFixed(2))));
+      if (this.operacionesFiltrada.length != 0) {
+        this.operacionesFiltrada = this.filterObjectsByMonth(this.operaciones, this.mesNumero);
+      }
     }
   }
 
@@ -190,6 +202,9 @@ export class RegistroOperacionesComponent implements OnInit {
     localStorage.setItem('traspasos', JSON.stringify(parseFloat(this.traspasos.toFixed(2))));
     // También puedes guardar el índice del elemento que se está editando para actualizarlo más tarde
     this.editingIndex = index;
+    if (this.operacionesFiltrada.length != 0) {
+      this.operacionesFiltrada = this.filterObjectsByMonth(this.operaciones, this.mesNumero);
+    }
   }
 
   update() {
@@ -235,6 +250,9 @@ export class RegistroOperacionesComponent implements OnInit {
 
         this.formulario.reset();
         this.editingIndex = undefined;
+        if (this.operacionesFiltrada.length != 0) {
+          this.operacionesFiltrada = this.filterObjectsByMonth(this.operaciones, this.mesNumero);
+        }
       }
     }
   }
