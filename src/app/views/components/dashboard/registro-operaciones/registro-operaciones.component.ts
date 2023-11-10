@@ -36,10 +36,10 @@ export class RegistroOperacionesComponent implements OnInit {
   operacionesFiltrada: Array<Operacion> = []
   operacionModel: Operacion = {
     idOperacion: 0,
-    beneficiario: 'Felix',
-    descripcion: 'Valdes',
-    factura: '1234XXX',
-    fecha: '2023-11-01',
+    beneficiario: '',
+    descripcion: '',
+    factura: '',
+    fecha: '',
     tipoOperacion: 'Ingreso',
     monto: 1.00
   }
@@ -49,6 +49,7 @@ export class RegistroOperacionesComponent implements OnInit {
   egresos: number = 0;
   traspasos: number = 0;
   editingIndex?: number = 0;
+  columns: any[] = []
 
   constructor(private fb: FormBuilder, private api: ExportService, private datePipe: DatePipe) {
     this.formulario = this.fb.group(this.operacionModel);
@@ -78,6 +79,8 @@ export class RegistroOperacionesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.columns = ["Beneficiario", "Descripción", "Factura", "Estado", "Fecha", "Tipo de Operación", "Monto"]
+    this.columns = ["fecha", "operacion", "beneficiario", "monto", "descripcion", "tipoOperacion", "factura"]
     if (localStorage.getItem('myData') != null) {
       this.operaciones = JSON.parse(localStorage.getItem('myData')!);
 
@@ -152,7 +155,7 @@ export class RegistroOperacionesComponent implements OnInit {
   }
 
   exportToExcel(): void {
-    this.api.exportToExcel(this.operaciones)
+    this.api.exportToExcel(this.columns,'Reporte','Datos',this.operaciones)
   }
 
   deletedata(idOperacion: number) {
