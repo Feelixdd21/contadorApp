@@ -155,7 +155,7 @@ export class RegistroOperacionesComponent implements OnInit {
   }
 
   exportToExcel(): void {
-    this.api.exportToExcel(this.columns,'Reporte','Datos',this.operaciones)
+    this.api.exportToExcel(this.operaciones)
   }
 
   deletedata(idOperacion: number) {
