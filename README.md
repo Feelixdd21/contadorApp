@@ -10,3 +10,6 @@ o descargarlo directamente
   
 ## Correr el proyecto
 - ng serve
+
+## Url
+http://localhost:4200/
