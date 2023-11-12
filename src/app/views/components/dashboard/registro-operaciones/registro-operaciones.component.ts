@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Operacion } from 'src/app/views/models/operacion.model';
 import { ExportService } from './service/export.service'
 import { DatePipe } from '@angular/common';
-
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-registro-operaciones',
@@ -78,9 +78,10 @@ export class RegistroOperacionesComponent implements OnInit {
     });
   }
 
+
   ngOnInit(): void {
     // this.columns = ["Beneficiario", "Descripción", "Factura", "Estado", "Fecha", "Tipo de Operación", "Monto"]
-    this.columns = ["fecha", "operacion", "beneficiario", "monto", "descripcion", "tipoOperacion", "factura"]
+    this.columns = ["Fecha", "Operacion", "Beneficiario", "Monto", "Descripción",  "Factura"]
     if (localStorage.getItem('myData') != null) {
       this.operaciones = JSON.parse(localStorage.getItem('myData')!);
 
@@ -123,9 +124,6 @@ export class RegistroOperacionesComponent implements OnInit {
           break;
       }
 
-      console.log(parseFloat(this.ingresos.toFixed(2)));
-
-
       const nuevaOperacion: Operacion = {
         idOperacion: this.nextId, // Asigna el ID
         beneficiario: this.formulario.get('beneficiario')?.value,
@@ -155,7 +153,7 @@ export class RegistroOperacionesComponent implements OnInit {
   }
 
   exportToExcel(): void {
-    this.api.exportToExcel(this.operaciones)
+    this.api.exportToExcel(this.columns, 'operaciones', 'Datos', this.operaciones, this.ingresos, this.egresos, this.traspasos)
   }
 
   deletedata(idOperacion: number) {

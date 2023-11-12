@@ -122,7 +122,7 @@
                         <td>{{operacion.fecha}}</td>
                         <td>{{operacion.tipoOperacion}}</td>
                         <td>{{operacion.beneficiario}}</td>
-                        <td>{{operacion.monto}}</td>
+                        <td>{{operacion.monto | number:'1.2-2'}}</td>
                         <td>{{operacion.descripcion}}</td>
                         <td>{{operacion.factura}}</td>
                         <td>
@@ -151,9 +151,9 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{{ingresos.toFixed(2)}}</td>
-                                        <td>{{egresos.toFixed(2)}}</td>
-                                        <td>{{traspasos.toFixed(2)}}</td>
+                                        <td>{{ingresos.toFixed(2) | number:'1.2-2'}}</td>
+                                        <td>{{egresos.toFixed(2) | number:'1.2-2'}}</td>
+                                        <td>{{traspasos.toFixed(2) | number:'1.2-2'}}</td>
                                     </tr>
                                 </tbody>
                             </table>
