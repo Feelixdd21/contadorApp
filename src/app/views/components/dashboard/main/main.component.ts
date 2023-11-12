@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -7,10 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
   mensaje = "Bienvenido";
+  mostrarImagen: boolean = false;
 
-  constructor() { }
+  constructor(private router: Router) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.mostrarImagen = this.deberiaMostrarImagen(event.url);
+      }
+    });
+   }
 
   ngOnInit(): void {
   }
 
+  private deberiaMostrarImagen(url: string): boolean {
+    // Lógica para determinar si la imagen debe mostrarse en función de la ruta
+    return url === '/dashboard';
+  }
 }
