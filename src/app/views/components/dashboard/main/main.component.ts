@@ -7,7 +7,7 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-  mensaje = "Bienvenido";
+  mensaje = "¡Bienvenido!";
   mostrarImagen: boolean = false;
 
   constructor(private router: Router) {

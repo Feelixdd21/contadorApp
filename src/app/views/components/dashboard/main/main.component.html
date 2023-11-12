@@ -1,11 +1,15 @@
 <app-navbar></app-navbar>
+<span class="centrado bg-white rounded fs-1" [hidden]="!mostrarImagen">
+    {{mensaje}}
+</span>
+<div class="col-xs-12" [hidden]="!mostrarImagen" style="height: calc(100vh - 56px); overflow: hidden;">
+    <img class="img-fluid"
+        src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="empresarios en discusión" />
+</div>
 <div class="container text-center">
     <div class="row">
         <div class="col">
-            <div class="col-lg-12 mt-3" [hidden]="!mostrarImagen">
-                <img  class="img-fluid img-fluid-custom" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    alt="empresarios en discusión" />
-            </div>
             <router-outlet></router-outlet>
         </div>
     </div>
