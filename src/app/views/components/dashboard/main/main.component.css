@@ -5,3 +5,15 @@
   transform: translate(-50%, -50%);
   z-index: 9999; /* Asegúrate de que el z-index sea lo suficientemente alto para estar por encima de otros elementos */
 }
+
+.ml13 {
+  font-size: 1.3em;
+  text-transform: uppercase;
+  letter-spacing: 0.5em;
+  font-weight: 600;
+}
+
+.ml13 .letter {
+  display: inline-block;
+  line-height: 1em;
+}
